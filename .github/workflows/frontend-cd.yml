@@ -1,11 +1,11 @@
-name: Frontend Continuous Deployment
-
+name: Frontend CD
 on:
   push:
     branches:
       - main
     paths:
       - "starter/frontend/**"
+      - ".github/workflows/**"
   workflow_dispatch:
 
 env:
