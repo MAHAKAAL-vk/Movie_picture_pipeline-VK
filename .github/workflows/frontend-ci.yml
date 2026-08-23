@@ -1,4 +1,4 @@
-name: Frontend Continuous Integration
+name: Frontend CI
 
 on:
   pull_request:
@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "starter/frontend/**"
+      - ".github/workflows/**"
   workflow_dispatch:
 
 jobs:
