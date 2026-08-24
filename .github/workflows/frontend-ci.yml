@@ -87,4 +87,4 @@ jobs:
         run: npm run test
 
       - name: Build Docker image
-        run: docker build --build-arg REACT_APP_MOVIE_API_URL=http://localhost:5000 -t movie-frontend .
+        run: docker build --push --load --build-arg REACT_APP_MOVIE_API_URL=http://localhost:5000 -t movie-frontend .

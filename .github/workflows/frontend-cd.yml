@@ -1,4 +1,5 @@
 name: Frontend CD
+
 on:
   push:
     branches:
