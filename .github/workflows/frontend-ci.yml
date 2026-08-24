@@ -84,4 +84,4 @@ jobs:
         run: npm ci
 
       - name: Build Docker image
-        run: docker build --push --build-arg REACT_APP_MOVIE_API_URL=http://localhost:5000 -t frontend:latest ./starter/frontend
+        run: docker build --build-arg REACT_APP_MOVIE_API_URL=${{ secrets.REACT_APP_MOVIE_API_URL }} -t frontend:latest .

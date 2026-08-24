@@ -3,10 +3,13 @@ import axios from 'axios';
 
 function MovieDetails({ movie }) {
   const [details, setDetails] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!movie?.id) return;
+    if (!movie?.id) {
+      setDetails(null);
+      return;
+    }
 
     const rawUrl = process.env.REACT_APP_MOVIE_API_URL || '';
     const baseUrl = rawUrl.replace(/\/$/, '');
@@ -24,6 +27,7 @@ function MovieDetails({ movie }) {
       });
   }, [movie]);
 
+  if (!movie) return null;
   if (loading) return <p>Loading details...</p>;
   if (!details) return null;
 
