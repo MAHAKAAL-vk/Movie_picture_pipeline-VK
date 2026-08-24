@@ -11,7 +11,7 @@ on:
 
 env:
   AWS_REGION: ${{ vars.AWS_REGION }}
-  ECR_REPOSITORY: movie-backend
+  ECR_REPOSITORY: backend
   IMAGE_TAG: ${{ github.sha }}
 
 jobs:
@@ -88,7 +88,6 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          # aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Login to Amazon ECR
@@ -112,8 +111,8 @@ jobs:
       - name: Update Kubeconfig
         run: |
           aws eks update-kubeconfig \
-            --region $AWS_REGION \
-            --name ${{ vars.EKS_CLUSTER_NAME }}
+            --region ${{ env.AWS_REGION }} \
+            --name ${{ secrets.EKS_CLUSTER_NAME }}
 
       - name: Deploy backend to EKS
         working-directory: starter/backend/k8s
