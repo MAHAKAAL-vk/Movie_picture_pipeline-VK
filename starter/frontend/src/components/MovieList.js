@@ -32,7 +32,7 @@ function MovieList({ onMovieClick }) {
         {movies.map((movie) => (
           <li
             key={movie.id}
-            className='movieItem'
+            className="movieItem"
             onClick={() => onMovieClick(movie)}
             style={{
               margin: '10px 0',
