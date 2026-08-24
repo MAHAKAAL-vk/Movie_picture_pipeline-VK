@@ -8,7 +8,7 @@ function MovieList({ onMovieClick }) {
 
   useEffect(() => {
     let rawUrl = process.env.REACT_APP_MOVIE_API_URL || '';
-    
+
     if (rawUrl && !rawUrl.startsWith('http://') && !rawUrl.startsWith('https://')) {
       rawUrl = `http://${rawUrl}`;
     }
@@ -22,10 +22,10 @@ function MovieList({ onMovieClick }) {
       .get(targetUrl)
       .then((response) => {
         console.log('Raw Response Data:', response.data);
-        
+
         const rawList = response.data?.movies || response.data;
         const list = Array.isArray(rawList) ? rawList : [];
-        
+
         setMovies(list);
         setLoading(false);
       })
