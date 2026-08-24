@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function MovieDetails({ movie }) {
   const [details, setDetails] = useState(null);
@@ -8,8 +8,8 @@ function MovieDetails({ movie }) {
   useEffect(() => {
     if (!movie?.id) return;
 
-    const rawUrl = process.env.REACT_APP_MOVIE_API_URL || "";
-    const baseUrl = rawUrl.replace(/\/$/, "");
+    const rawUrl = process.env.REACT_APP_MOVIE_API_URL || '';
+    const baseUrl = rawUrl.replace(/\/$/, '');
 
     setLoading(true);
     axios
@@ -19,7 +19,7 @@ function MovieDetails({ movie }) {
         setLoading(false);
       })
       .catch((err) => {
-        console.error("Error fetching movie details:", err);
+        console.error('Error fetching movie details:', err);
         setLoading(false);
       });
   }, [movie]);
@@ -30,10 +30,10 @@ function MovieDetails({ movie }) {
   return (
     <div
       style={{
-        marginTop: "20px",
-        padding: "15px",
-        border: "1px solid #4CAF50",
-        borderRadius: "5px",
+        marginTop: '20px',
+        padding: '15px',
+        border: '1px solid #4CAF50',
+        borderRadius: '5px',
       }}
     >
       <h2>{details?.movie?.title}</h2>
