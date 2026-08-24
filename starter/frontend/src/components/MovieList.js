@@ -7,7 +7,12 @@ function MovieList({ onMovieClick }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const rawUrl = process.env.REACT_APP_MOVIE_API_URL || '';
+    let rawUrl = process.env.REACT_APP_MOVIE_API_URL || '';
+    
+    if (rawUrl && !rawUrl.startsWith('http://') && !rawUrl.startsWith('https://')) {
+      rawUrl = `http://${rawUrl}`;
+    }
+
     const baseUrl = rawUrl.replace(/\/$/, '');
     const targetUrl = `${baseUrl}/movies`;
 
@@ -17,8 +22,10 @@ function MovieList({ onMovieClick }) {
       .get(targetUrl)
       .then((response) => {
         console.log('Raw Response Data:', response.data);
-        // Extract array from {'movies': [...]}
-        const list = response.data?.movies || response.data || [];
+        
+        const rawList = response.data?.movies || response.data;
+        const list = Array.isArray(rawList) ? rawList : [];
+        
         setMovies(list);
         setLoading(false);
       })
@@ -33,7 +40,7 @@ function MovieList({ onMovieClick }) {
   if (error) return <p style={{ color: 'red' }}>Error: {error}</p>;
 
   if (!movies || movies.length === 0) {
-    return <p style={{ color: 'orange' }}>Connected to API, but movie list is empty.</p>;
+    return <p style={{ color: 'orange' }}>Connected, but no movies found (or API returned invalid data).</p>;
   }
 
   return (
