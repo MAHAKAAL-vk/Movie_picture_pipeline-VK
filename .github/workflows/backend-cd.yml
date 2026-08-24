@@ -112,7 +112,7 @@ jobs:
         run: |
           aws eks update-kubeconfig \
             --region ${{ env.AWS_REGION }} \
-            --name ${{ secrets.EKS_CLUSTER_NAME }}
+            --name ${{ vars.EKS_CLUSTER_NAME }}
 
       - name: Deploy backend to EKS
         working-directory: starter/backend/k8s
