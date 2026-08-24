@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 function MovieList({ onMovieClick }) {
   const [movies, setMovies] = useState([]);
@@ -7,38 +7,54 @@ function MovieList({ onMovieClick }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const baseUrl = process.env.REACT_APP_MOVIE_API_URL || '';
+    const rawUrl = process.env.REACT_APP_MOVIE_API_URL || "";
+    const baseUrl = rawUrl.replace(/\/$/, "");
+    const targetUrl = `${baseUrl}/movies`;
+
+    console.log("Fetching from:", targetUrl);
 
     axios
-      .get(`${baseUrl}/movies`)
+      .get(targetUrl)
       .then((response) => {
-        // Backend returns: { 'movies': [ { 'id': '123', 'title': 'Top Gun...' }, ... ] }
-        setMovies(response.data.movies || []);
+        console.log("Raw Response Data:", response.data);
+        // Extract array from {'movies': [...]}
+        const list = response.data?.movies || response.data || [];
+        setMovies(list);
         setLoading(false);
       })
       .catch((err) => {
-        console.error('Error fetching movies:', err);
-        setError('Failed to load movies');
+        console.error("Fetch Error:", err);
+        setError(err.message || "Failed to fetch");
         setLoading(false);
       });
   }, []);
 
   if (loading) return <p>Loading movies...</p>;
-  if (error) return <p style={{ color: 'red' }}>{error}</p>;
+  if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
+
+  if (!movies || movies.length === 0) {
+    return (
+      <p style={{ color: "orange" }}>
+        Connected to API, but movie list is empty.
+      </p>
+    );
+  }
 
   return (
-    <div>
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+    <div style={{ marginTop: "20px" }}>
+      <ul style={{ listStyle: "none", padding: 0 }}>
         {movies.map((movie) => (
           <li
             key={movie.id}
             className="movieItem"
             onClick={() => onMovieClick(movie)}
             style={{
-              margin: '10px 0',
-              padding: '8px',
-              border: '1px solid #ccc',
-              borderRadius: '4px',
+              margin: "10px 0",
+              padding: "10px 20px",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+              cursor: "pointer",
+              backgroundColor: "#f9f9f9",
             }}
           >
             <strong>{movie.title}</strong>
