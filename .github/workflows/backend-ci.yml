@@ -95,4 +95,4 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build Docker Image
-        run: docker build -t backend:latest ./starter/backend
+        run: docker build --push -t backend:latest ./starter/backend
