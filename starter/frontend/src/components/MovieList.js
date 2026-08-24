@@ -33,11 +33,7 @@ function MovieList({ onMovieClick }) {
   if (error) return <p style={{ color: 'red' }}>Error: {error}</p>;
 
   if (!movies || movies.length === 0) {
-    return (
-      <p style={{ color: 'orange' }}>
-        Connected to API, but movie list is empty.
-      </p>
-    );
+    return <p style={{ color: 'orange' }}>Connected to API, but movie list is empty.</p>;
   }
 
   return (
